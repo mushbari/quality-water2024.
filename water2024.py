@@ -4,11 +4,11 @@ import pickle
 import os
 
 # Load the data
-data_path = r"C:\Users\mmnm2\Desktop\PROJECT 45 END\water.csv"
+data_path = "water.csv"  # Update the path to the correct location
 df = pd.read_csv(data_path)
 
 # Load the trained model
-model_path ="C:/Users/mmnm2/Desktop/PROJECT 45 END/RandomForestClassifier_model1.sav"
+model_path ="RandomForestClassifier_model1.sav"  # Update the path to the correct location
 def load_model():
     try:
         if os.path.exists(model_path):
