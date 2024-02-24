@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 import os
+import numpy as np
 
 # Load the data
 data_path = "water.csv"  # Update the path to the correct location
@@ -43,15 +44,15 @@ def main():
     Turbidity = st.text_input("Turbidity")
 
     data = {
-        'ph': [float(ph) if ph else None],
-        'Hardness': [float(Hardness) if Hardness else None],
-        'Solids': [float(Solids) if Solids else None],
-        'Chloramines': [float(Chloramines) if Chloramines else None],
-        'Sulfate': [float(Sulfate) if Sulfate else None],
-        'Conductivity': [float(Conductivity) if Conductivity else None],
-        'Organic_carbon': [float(Organic_carbon) if Organic_carbon else None],
-        'Trihalomethanes': [float(Trihalomethanes) if Trihalomethanes else None],
-        'Turbidity': [float(Turbidity) if Turbidity else None]
+        'ph': [float(ph) if ph else np.nan],
+        'Hardness': [float(Hardness) if Hardness else np.nan],
+        'Solids': [float(Solids) if Solids else np.nan],
+        'Chloramines': [float(Chloramines) if Chloramines else np.nan],
+        'Sulfate': [float(Sulfate) if Sulfate else np.nan],
+        'Conductivity': [float(Conductivity) if Conductivity else np.nan],
+        'Organic_carbon': [float(Organic_carbon) if Organic_carbon else np.nan],
+        'Trihalomethanes': [float(Trihalomethanes) if Trihalomethanes else np.nan],
+        'Turbidity': [float(Turbidity) if Turbidity else np.nan]
     }
     input_df = pd.DataFrame(data)
 
@@ -62,6 +63,8 @@ def main():
         # Create a button to execute the prediction
         if st.button('Predict Potability'):
             if model is not None:
+                # Handle missing values
+                input_df = input_df.fillna(input_df.mean())
                 prediction = model.predict(input_df)
                 if prediction[0] == 0:
                     st.write('The water is not potable.')
